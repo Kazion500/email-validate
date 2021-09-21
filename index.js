@@ -44,15 +44,17 @@ app.post("/", async (req, res) => {
     //   },
     // };
 
+    const newTags = tags.split(',')
+
     console.log("RESPONSE FROM BULK", response.data);
     if (response.data.Status.toLowerCase() === "valid") {
       console.log("PASSED...");
-      const contact = await putToGHL(contact_id, [tags,"validated"], apiKey);
+      const contact = await putToGHL(contact_id, [...newTags,"validated"], apiKey);
       console.log("CONTACT: ", contact);
       return res.send(contact);
     } else {
       console.log("EMAIL NOT VALID");
-      const contact = await putToGHL(contact_id, [tags,"Dnd"], apiKey);
+      const contact = await putToGHL(contact_id, [...newTags,"Dnd"], apiKey);
       return res.status(200).json({msg:"EMAIL NOT VALID",contact});
     }
   } catch (error) {
