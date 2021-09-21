@@ -47,12 +47,12 @@ app.post("/", async (req, res) => {
     console.log("RESPONSE FROM BULK", response.data);
     if (response.data.Status.toLowerCase() === "valid") {
       console.log("PASSED...");
-      const contact = await putToGHL(contact_id, "valid", apiKey);
+      const contact = await putToGHL(contact_id, "validated", apiKey);
       console.log("CONTACT: ", contact);
       return res.send(contact);
     } else {
       console.log("EMAIL NOT VALID");
-      const contact = await putToGHL(contact_id, "invalid", apiKey);
+      const contact = await putToGHL(contact_id, "Dnd", apiKey);
       return res.send("EMAIL NOT VALID: " + contact);
     }
   } catch (error) {
