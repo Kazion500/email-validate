@@ -10,7 +10,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", async (req, res) => {
-  const { contact_id, email } = req.body;
+  const { contact_id, email,tags } = req.body;
   const { apiKey } = req.query;
   console.log("REQUEST DATA", req.body);
   console.log("EMAIL", email);
@@ -47,12 +47,12 @@ app.post("/", async (req, res) => {
     console.log("RESPONSE FROM BULK", response.data);
     if (response.data.Status.toLowerCase() === "valid") {
       console.log("PASSED...");
-      const contact = await putToGHL(contact_id, "validated", apiKey);
+      const contact = await putToGHL(contact_id, [tags,"validated"], apiKey);
       console.log("CONTACT: ", contact);
       return res.send(contact);
     } else {
       console.log("EMAIL NOT VALID");
-      const contact = await putToGHL(contact_id, "Dnd", apiKey);
+      const contact = await putToGHL(contact_id, [tags,"Dnd"], apiKey);
       return res.send("EMAIL NOT VALID: " + contact);
     }
   } catch (error) {
@@ -67,7 +67,7 @@ async function putToGHL(contactId, tag, apiKey) {
     const response = await axios.put(
       url,
       {
-        tags: [tag],
+        tags: tag,
       },
       {
         headers: {
