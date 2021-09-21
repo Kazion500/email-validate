@@ -53,11 +53,11 @@ app.post("/", async (req, res) => {
     } else {
       console.log("EMAIL NOT VALID");
       const contact = await putToGHL(contact_id, [tags,"Dnd"], apiKey);
-      return res.send("EMAIL NOT VALID: " + contact);
+      return res.status(200).json({msg:"EMAIL NOT VALID",contact});
     }
   } catch (error) {
     console.log("No Email FOUND or Couldnt get the email");
-    res.send("No Email FOUND");
+    res.json({error:"No Email FOUND"});
   }
 });
 
