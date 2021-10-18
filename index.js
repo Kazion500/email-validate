@@ -10,7 +10,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", async (req, res) => {
-  const { contact_id, email,tags } = req.body;
+  const { contact_id, email, tags } = req.body;
   const { apiKey } = req.query;
   console.log("REQUEST DATA", req.body);
   console.log("EMAIL", email);
@@ -44,22 +44,29 @@ app.post("/", async (req, res) => {
     //   },
     // };
 
-    const newTags = tags.split(',')
+    const newTags = tags.split(",");
 
     console.log("RESPONSE FROM BULK", response.data);
     if (response.data.Status.toLowerCase() === "valid") {
       console.log("PASSED...");
-      const contact = await putToGHL(contact_id, [...newTags,"validated"], apiKey);
+      const note = putNotesToGHL(contact_id, "Email is valid", apiKey);
+      const contact = await putToGHL(
+        contact_id,
+        [...newTags, "validated"],
+        apiKey
+      );
       console.log("CONTACT: ", contact);
-      return res.send(contact);
+
+      return res.json({ contact, note });
     } else {
       console.log("EMAIL NOT VALID");
-      const contact = await putToGHL(contact_id, [...newTags,"Dnd"], apiKey);
-      return res.status(200).json({msg:"EMAIL NOT VALID",contact});
+      const note = putNotesToGHL(contact_id, "Email is not valid", apiKey);
+      const contact = await putToGHL(contact_id, [...newTags, "Dnd"], apiKey);
+      return res.status(200).json({ msg: "EMAIL NOT VALID", contact, note });
     }
   } catch (error) {
     console.log("No Email FOUND or Couldnt get the email");
-    res.json({error:"No Email FOUND"});
+    res.json({ error: "No Email FOUND" });
   }
 });
 
@@ -70,6 +77,29 @@ async function putToGHL(contactId, tag, apiKey) {
       url,
       {
         tags: tag,
+      },
+      {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+      }
+    );
+    console.log("PUT DATA: ", response.data);
+    return response.data;
+  } catch (error) {
+    console.log("PUT CANT HAPPEN", error.response.data);
+    return error.response.data;
+  }
+}
+
+async function putNotesToGHL(contactId, note, apiKey) {
+  try {
+    const url = `https://rest.gohighlevel.com/v1/contacts/${contactId}/notes/`;
+    const response = await axios.put(
+      url,
+      {
+        body: note,
       },
       {
         headers: {
