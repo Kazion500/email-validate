@@ -49,7 +49,7 @@ app.post("/", async (req, res) => {
     console.log("RESPONSE FROM BULK", response.data);
     if (response.data.Status.toLowerCase() === "valid") {
       console.log("PASSED...");
-      const note = putNotesToGHL(contact_id, "Email is valid", apiKey);
+      const note = putNotesToGHL(contact_id, response.data.Diagnosis, apiKey);
       const contact = await putToGHL(
         contact_id,
         [...newTags, "validated"],
@@ -60,7 +60,7 @@ app.post("/", async (req, res) => {
       return res.json({ contact, note });
     } else {
       console.log("EMAIL NOT VALID");
-      const note = putNotesToGHL(contact_id, "Email is not valid", apiKey);
+      const note = putNotesToGHL(contact_id, response.data.Diagnosis, apiKey);
       const contact = await putToGHL(contact_id, [...newTags, "Dnd"], apiKey);
       return res.status(200).json({ msg: "EMAIL NOT VALID", contact, note });
     }
