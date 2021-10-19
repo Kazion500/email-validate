@@ -61,7 +61,7 @@ app.post("/", async (req, res) => {
     } else {
       console.log("EMAIL NOT VALID");
       const note = putNotesToGHL(contact_id, response.data.Diagnosis, apiKey);
-      const contact = await putToGHL(contact_id, [...newTags], apiKey);
+      const contact = await putToGHL(contact_id, [...newTags,'validated'], apiKey);
       return res.status(200).json({ msg: "EMAIL NOT VALID", contact, note });
     }
   } catch (error) {
