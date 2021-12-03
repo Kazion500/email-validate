@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+  <!-- Mirrored from demos.wrappixel.com/free-admin-templates/bootstrap/monster-bootstrap-free/html/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 24 Nov 2021 09:22:11 GMT -->
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Email Validation - Dashboard</title>
+    <!-- Favicon icon -->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="https://demos.wrappixel.com/free-admin-templates/bootstrap/monster-bootstrap-free/assets/images/favicon.png"
+    />
+    <!-- Custom CSS -->
+    <link
+      href="https://demos.wrappixel.com/free-admin-templates/bootstrap/monster-bootstrap-free/assets/plugins/chartist/dist/chartist.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom CSS -->
+    <link
+      href="https://demos.wrappixel.com/free-admin-templates/bootstrap/monster-bootstrap-free/html/css/style.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+      #main-wrapper[data-layout="vertical"][data-sidebartype="full"]
+        .page-wrapper {
+        margin-left: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+      <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+      </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div
+      id="main-wrapper"
+      data-layout="vertical"
+      data-navbarbg="skin6"
+      data-sidebartype="full"
+      data-sidebar-position="absolute"
+      data-header-position="absolute"
+      data-boxed-layout="full"
+    >
+      <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+          <div class="row align-items-center">
+            <div class="col-md-6 col-8 align-self-center">
+              <h3 class="page-title mb-0 p-0">Email Validation Dashboard</h3>
+            </div>
+          </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+          <!-- ============================================================== -->
+          <!-- Sales chart -->
+          <!-- ============================================================== -->
+          <div class="row">
+            <!-- Column -->
+            <div class="col-sm-6">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Valid Emails</h4>
+                  <div class="text-end">
+                    <h2 class="font-light mb-0">
+                      <span class="material-icons text-success"> email </span>
+                      <%= valid %>
+                    </h2>
+                    <span class="text-muted">out of <%= count %> </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Column -->
+            <!-- Column -->
+            <div class="col-sm-6">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Invalid Email</h4>
+                  <div class="text-end">
+                    <h2 class="font-light mb-0">
+                      <span class="material-icons text-danger"> email </span>
+                      <%=inValid %>
+                    </h2>
+                    <span class="text-muted">out of <%= count %></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Column -->
+          </div>
+
+          <div class="col-sm-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-md-flex">
+                  <h4
+                    class="
+                      card-title
+                      col-md-7 col-lg-8
+                      mb-md-0 mb-3
+                      align-self-center
+                    "
+                  >
+                    Email Validated
+                  </h4>
+                  <div class="mr-3">
+                    <button type="button" class="btn btn-dark">
+                      Push to CRM
+                    </button>
+
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      data-toggle="modal"
+                      data-target="#exampleModalCenter"
+                    >
+                      Upload CSV
+                    </button>
+                  </div>
+
+                  <div class="col-md-2 row ms-auto">
+                    <select
+                      class="form-select shadow-none col-md-6 ml-auto mb-2"
+                      id="selectStatus"
+                    >
+                      <option disabled selected class="bg-secondary text-white">
+                        <%= currentStatus %>
+                      </option>
+                      <option value="">All</option>
+                      <option value="1">Valid</option>
+                      <option value="0">Invalid</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="table-responsive mt-5">
+                  <table class="table stylish-table no-wrap">
+                    <thead>
+                      <tr>
+                        <th class="border-top-0">Name</th>
+                        <th class="border-top-0">Email</th>
+                        <th class="border-top-0">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% if(users.length){ %> <% users.forEach(user => { %>
+                      <tr class="active">
+                        <td class="align-middle">
+                          <h6><%= user.firstName %> <%= user.lastName %></h6>
+                          <!-- <small class="text-muted">Web Designer</small> -->
+                        </td>
+                        <td class="align-middle"><%= user.email %></td>
+                        <td class="align-middle">
+                          <% if(user.status.toLowerCase() == 'valid'){ %>
+                          <span class="btn btn-success text-white btn-sm py-0">
+                            <%= user.status %>
+                          </span>
+                          <% } else{ %>
+                          <span class="btn btn-danger text-white btn-sm py-0">
+                            <%= user.status %>
+                          </span>
+                          <% } %>
+                        </td>
+                      </tr>
+                      <% }) %> <% } else{ %>
+                      <tr class="text-center">
+                        <td colspan="3">No data</td>
+                      </tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ============================================================== -->
+          <!-- Table -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <footer class="footer text-center">
+          © 2021 AUTHORITY ENTREPRENEURS by
+          <a href="https://www.authorityentrepreneurs.com"
+            >https://www.authorityentrepreneurs.com</a
+          >
+        </footer>
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
+      </div>
+      <!-- ============================================================== -->
+      <!-- End Page wrapper  -->
+      <!-- ============================================================== -->
+    </div>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModalCenter"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form method="post" action="/csv" encType="multipart/form-data">
+            <input type="hidden" name='aid' value="<%= aid %>" >
+            <input type="hidden" name='lid' value="<%= token %>" >
+            <div class="modal-body">
+              <div class="form-group files">
+                <label>Upload Your File </label>
+                <input
+                  type="file"
+                  name="csv"
+                  class="form-control"
+                  multiple=""
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">
+                Cancel
+              </button>
+              <button type="submit" class="btn btn-primary">Upload</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="https://demos.wrappixel.com/free-admin-templates/bootstrap/monster-bootstrap-free/assets/plugins/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="https://demos.wrappixel.com/free-admin-templates/bootstrap/monster-bootstrap-free/assets/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://demos.wrappixel.com/free-admin-templates/bootstrap/monster-bootstrap-free/html/js/app-style-switcher.js"></script>
+    <!--Wave Effects -->
+    <script src="https://demos.wrappixel.com/free-admin-templates/bootstrap/monster-bootstrap-free/html/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="https://demos.wrappixel.com/free-admin-templates/bootstrap/monster-bootstrap-free/html/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="https://demos.wrappixel.com/free-admin-templates/bootstrap/monster-bootstrap-free/html/js/custom.js"></script>
+    <!--This page JavaScript -->
+    <!--flot chart-->
+    <script src="https://demos.wrappixel.com/free-admin-templates/bootstrap/monster-bootstrap-free/assets/plugins/flot/jquery.flot.js"></script>
+    <script src="https://demos.wrappixel.com/free-admin-templates/bootstrap/monster-bootstrap-free/assets/plugins/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
+    <script src="https://demos.wrappixel.com/free-admin-templates/bootstrap/monster-bootstrap-free/html/js/pages/dashboards/dashboard1.js"></script>
+    <script src="/js/app.js"></script>
+  </body>
+
+  <!-- Mirrored from demos.wrappixel.com/free-admin-templates/bootstrap/monster-bootstrap-free/html/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 24 Nov 2021 09:22:11 GMT -->
+</html>
