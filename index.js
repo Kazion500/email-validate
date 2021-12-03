@@ -1,6 +1,5 @@
 const { default: axios } = require("axios");
 const express = require("express");
-const fs = require("fs");
 const { PrismaClient } = require("@prisma/client");
 const { VALID, INVALID } = require("./constants");
 const fileUpload = require("express-fileupload");
@@ -169,6 +168,10 @@ app.post("/csv", async (req, res) => {
     return res.redirect("/error?token=token is required");
   }
   if (!req.files) {
+    return res.redirect(`/?token=${lid}`);
+  }
+
+  if (!req.files.csv.mimetype.includes("csv")) {
     return res.redirect(`/?token=${lid}`);
   }
 
